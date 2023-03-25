@@ -17,16 +17,17 @@ app.post("/",function(req,res){
     const apiKey = "48fa9838598b24c40946dc33d60f44c6";
     const  unit = "metric";
 
-    const url = "https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99"+"&appid="+apiKey + "&q=" + query;
+    
+    const url = "https://api.openweathermap.org/data/2.5/weather?q=" + query +  "&appid=" + apiKey + "&units=" + unit;
 
     https.get(url,function(response){
         console.log(response.statusCode);
 
         response.on("data",function(data){
-            const weatherData = JSON.parse(data)
+            const weatherData = JSON.parse(data);
             const temp = weatherData.main.temp;
-            const weatherDescription = weatherData.weather[0].description
-            const icon = weatherData.weather[0].icon
+            const weatherDescription = weatherData.weather[0].description;
+            const icon = weatherData.weather[0].icon;
             const imageURL = "https://openweathermap.org/img/wn/"+ icon+ "@2x.png";
             res.write("<p>the weather is currently " + weatherDescription + "<p>");
             res.write("<h1>the temperature in "+ query+" is "+temp +" degrees Kelvin.</h1>");
